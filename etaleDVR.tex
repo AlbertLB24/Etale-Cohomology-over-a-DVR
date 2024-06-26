@@ -1,0 +1,546 @@
+\documentclass{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% package setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage[shortlabels]{enumitem}
+\usepackage{amsfonts,amsmath, soul, matlab-prettifier, bm, amsthm,enumitem,amssymb,multirow,float,mathtools,bbm,array,varwidth,hyperref,bm}
+\usepackage[all]{xy}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{graphicx}
+\usepackage{mathtools, caption, dsfont, tikz-cd}
+\usepackage{wrapfig}
+
+
+\mathchardef\mhyphen="2D
+
+
+\raggedbottom
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% operators and symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% operators
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Ker}{\mathrm{Ker}}
+\newcommand{\Pic}{\mathrm{Pic}}
+\newcommand{\comp}{\mathrm{comp}}
+\newcommand{\Proj}{\mathrm{Proj}}
+\newcommand{\rk}{\mathrm{rk}}
+\newcommand{\Spec}{\mathrm{Spec}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Frob}{\mathrm{Frob}}
+\newcommand{\Gal}{\mathrm{Gal}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\Ind}{\mathrm{Ind}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\Smo}{\mathrm{Smo}}
+\newcommand{\Span}{\mathrm{Span}}
+\newcommand{\Frac}{\mathrm{Frac}}
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\St}{\mathrm{St}}
+\newcommand{\Top}{\mathrm{Top}}
+\newcommand{\Ab}{\mathrm{Ab}}
+\newcommand{\Set}{\mathrm{Set}}
+\newcommand{\Et}{\acute{\mathrm{E}}\mathrm{t}}
+\newcommand{\et}{\acute{\mathrm{e}}\mathrm{t}}
+\newcommand{\Psh}{\mathrm{Psh}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\Id}{\mathrm{Id}}
+
+
+
+
+
+% mathcal
+\newcommand{\cO}{\mathcal{O}}
+
+% mathbb
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\adele}{\mathbb{A}}
+\newcommand{\pp}{\mathfrak{p}}
+\newcommand{\nn}{\mathfrak{n}}
+\newcommand{\mm}{\mathfrak{m}}
+
+% mathfrak
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fm}{\mathfrak{m}}
+
+% shortcuts
+\newcommand{\CG}{C_c^{\infty}(G)}
+\newcommand{\cInd}{c\mhyphen\mathrm{Ind}}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\hatv}[1]{\overset{\vee}{\mathstrut#1}}
+
+\DeclareMathOperator{\Ima}{Im}
+
+\linespread{1.5}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{question}[theorem]{Question}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{convention}[theorem]{Convention}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{algo}[theorem]{Algorithm}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{notn}[theorem]{Notation}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}[theorem]{Examples}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem*{hypothesis}{Hypothesis}
+\newtheorem*{exercise}{Exercise}
+
+
+\title{\'{E}tale Cohomology over a Discrete Valuation Ring}
+\author{Albert Lopez Bruch}
+
+\begin{document}
+	\maketitle
+	\pagenumbering{arabic}
+	This talk is the third and last talk of the \'{E}tale cohomology trilogy. In this talk we study the particular case of \'{E}tale cohomology over a discrete valuation ring $R$. Similarly to the case of \'{E}tale cohomology over a field $k$, which coincides with the usual Galois cohomology, \'{E}tale cohomology over a DVR is very explicit. We will see that the category of \'{E}tale sheaves over $\Spec R$ is equivalent to a category of `Galois modules' over $R$ that we will explicitly construct. Moreover, under the equivalence, the global sections functor corresponds to a $\mathrm{\Hom}(A,-)$ functor for some Galois module $A$ over $R$. Thus, the study of \'{E}tale cohomology reduces to the study of $\mathrm{Ext}$ groups over the category of Galois modules.
+
+    We begin the talk by recalling some important facts about \'{E}tale cohomology that have already been presented and that will be used throughout, including the explicit equivalence between \'{E}tale cohomology over a field and Galois cohomology. Afterwards, there will be a short section that describes useful constructions on \'{E}tale sheaves that we will use in the main section to describe the equivalence between the \'{E}tale sheaves and Galois modules over $R$.
+    
+    The final section uses homological algebra tools to study the corresponding $\mathrm{Ext}$. The main result on that section shows that \'{E}tale cohomology over $R$ is highly related over Galois cohomology over the residue field $k$, and motivates the motto ``\'{E}tale cohomology over a discrete valuation ring is unramified Galois cohomology''. This talk heavily relies on Stein's notes on Galois cohomology (he covers \'{E}tale cohomology in the latter chapters) that are in turn based on Mazur's notes.
+
+    \section{Recap on \'{E}tale Cohomology}
+    \subsection{\'{E}tale Sheaves and Cohomology}\label{sec:recap}
+    Let $X$ be a scheme. Recall from the first talk that the usual sheaf cohomology on $X$, in which one resolves the global sections functor
+    \begin{align*}
+        \Gamma(X,-):\mathrm{Sh}(\Top(X),\Set)&\longrightarrow\Set\\
+        \mathcal{F}&\longmapsto\mathcal{F}(X),    
+    \end{align*} 
+    which is left exact but not right exact, does not give the ``correct'' cohomology groups in the setting of algebraic varieties.  Here, $\Top(X)$ is the category whose objects are open sets of $X$ and morphisms are given by inclusions, and $\mathrm{Sh}(\Top(X),\Set)$ denotes the category of \textit{sheaves} $\mathcal{F}:\Top(X)^{op}\to\Set$. As it was explained in the first talk, this cohomology theory does not give useful cohomology groups mainly due to the fact that the Zariski topology on $X$ is too coarse and the open subsets are too large.
+
+    To resolve this problem, one needs to relax the notion of a topology on $X$ in the standard sense, and accept the notion of a \textit{Grothendieck topology} (or rather, a \textit{Grothendieck site}). This point of view is necessary to obtain a sufficiently fine topology on the scheme $X$, where we replace the Zariski topology by the \textit{\'{E}tale topology / site}. 
+    
+    More concretely, one replaces the category $\Top(X)$ by the category $\Et(X)$ whose objects pairs $(U,U\to X)$ where $U$ is a scheme and $U\to X$ is an \'{e}tale morphisms, and whose morphisms are $X$-morphisms. That is they are maps of schemes $U\to V$ such that the diagram 
+    \[
+        \begin{tikzcd}[row sep=1em, column sep=1em]
+			U \arrow[rr, ""] \arrow[dr, ""]  & & V \arrow[dl, ""] \\
+			& X &
+		\end{tikzcd}
+    \]
+    
+    commutes. We shall not redefine or describe \'{e}tale morphisms in any more detail than the previous talks, but we recall some basis properties they satisfy, and that will be relevant later on.
+    
+    \begin{lemma}\label{lem:etaleproperties}
+        \'{E}tale morphisms satisfy the following properties.
+        \vspace{0.4cm}
+
+        \begin{minipage}{0.45\textwidth}
+            \begin{enumerate}[(1)]
+                \item Composition of \'{e}tale maps is \'{e}tale.
+                \item If $\varphi\circ\psi$ and $\varphi$ are \'{e}tale, then so is $\psi$
+                \item The pullback of an \'{e}tale map is \'{e}tale.
+                \item Open immersions are \'{e}tale.
+            \end{enumerate}       
+        \end{minipage}
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{equation}\tag{\ref{sec:recap}.1}\label{pullbacksq}
+                \begin{tikzcd}
+                    U\times_X X' \arrow[r,"\text{\'{e}tale}"] \arrow[d,""] & X' \arrow[d,""] \\
+                    U \arrow[r,"\text{\'{e}tale}"] & X
+                \end{tikzcd}
+            \end{equation}
+            A pullback square
+        \end{minipage}        
+    \end{lemma}
+
+    \begin{remark}
+        The third property implies that the morphisms $U\to V$ on the category $\Et(X)$ are themselves \'{e}tale morphisms, even though they are not defined to be \textit{a priori}.
+    \end{remark}
+    
+    
+
+    Following the analogous construction of sheaf cohomology, one then introduces the notion of an \textit{\'{e}tale sheaf}. It is defined as a functor $\mathcal{F}:\Et(X)^{op}\to\Set$ (called an \textit{\'{e}tale presheaf}) satisfying the \textit{sheaf axiom}. To simplify notation, one normally writes $\mathcal{F}(U)$ instead of $\mathcal{F}(U\to X)$ whenever the morphism $U\to X$ is clear from context. To state the sheaf axiom, the main idea is to replace the notion of an open covering in the standard sense by an \textit{\'{e}tale open covering}, a family of \'{e}tale morphisms $\{\varphi_i:U_i\to U\}$ where $\cup_i\varphi_i(U_i)=U$ and $U\to X$ is an \'{e}tale morphism. With this language, the sheaf axiom states that for any \'{e}tale morphism $U\to X$ and \'{e}tale open covering $\{U_i\to U\}$, the sequence
+    $$0\longrightarrow \mathcal{F}(U)\longrightarrow\prod_i\mathcal{F}(U_i)\rightrightarrows\prod_{i,j}\mathcal{F}(U_i\times_U U_j),$$
+    is exact, where the maps are the ones induced by the pullback square \eqref{pullbacksq}.
+
+    The \'{e}tale preseheaves on $X$ form a category whose morphism are natural transformations, and it will be denoted as $\Psh(\Et(X),\Set)$. The sheaves are a full subcategory, denoted as $\Sh(\Et(X),\Set)$. In practice, most \'{e}tale presheaves and sheaves that arise naturally have extra structure; they are in fact functors from $\Et(X)^{op}$ to the category $\Ab$ of abelian groups. These are called \textit{abelian presheaves} and \textit{abelian sheaves}, respectively.    
+    
+    Analogously to sheaf cohomology, there is the \textit{global sections functor}
+    \begin{align*}
+        \Gamma(X,-):\mathrm{Sh}(\Et(X),\Set)&\longrightarrow\Set\\
+        \mathcal{F}&\longmapsto\mathcal{F}(X),
+    \end{align*}
+    where $\mathcal{F}(X)$ stands for $\mathcal{F}(X\xrightarrow{\Id_X}X)$. This functor is also left exact but not right exact. Then the $r$th cohomology of $X$ is defined as the $r$th right derived functor of $\Gamma(X,-)$. That is, for any \'{e}tale sheaf $\mathcal{F}$ on $X$, 
+    $$H^q_{\et}(X,\mathcal{F})=R^q(\Gamma(X,-))(\mathcal{F}).$$  
+
+
+    \subsection{\'{E}tale Cohomology over a Field}\label{sec:etalefield}
+    Let $k$ be a field and fix a separable closure $k_s$. Let $G_k=\Gal(k_s/k)$ be the absolute Galois group of $k$. We now revisit in some detail the equivalence between \'{e}tale cohomology over $k$ and Galois cohomology. We will use the notation shorthand $S_k$ to denote the category of $G_k$-modules.
+
+    Recall that $U\to\Spec k$ is an \'{e}tale morphism if and only if $U=\sqcup_i \Spec L_i$ for some family of finite separable extensions $L_i$ of $k$. We write $\mathcal{F}(L_i)$ instead of $\mathcal{F}(\Spec L_i\to\Spec k)$ to simplify notation further. Moreover, since $\{\Spec L_i\hookrightarrow U\}_i$ is an \'{e}tale open covering of $U$, the sheaf axiom implies that, for any sheaf $\mathcal{F}$ over $\Spec k$, 
+    \begin{equation}\label{eqn:speck}\tag{\ref{sec:etalefield}.1}
+        \mathcal{F}(U)=\prod_i\mathcal{F}(L_i)
+    \end{equation}
+    and therefore $\mathcal{F}(U)$ is determined by the values on $\mathcal{F}(L_i)$. 
+    
+    If $L/k$ is finite and \textit{Galois}, then any map $\sigma\in\Gal(L/k)$ induces a map $\mathcal{F}(\sigma):\mathcal{F}(L)\to\mathcal{F}(L)$ in a natural way. If $L'/L/k$ is a tower of finite Galois extensions, the inclusion $L\hookrightarrow L'$ induces a morphism $\Spec L'\to\Spec L$ on $\Et(\Spec k)$ and therefore a map of sets $\mathcal{F}(L)\to\mathcal{F}(L')$. Furthermore, the square 
+    \[
+        \begin{tikzcd}
+            \mathcal{F}(L) \arrow[r,""] \arrow[d,"\mathcal{F}(\sigma|_L)"] & \mathcal{F}(L') \arrow[d,"\mathcal{F}(\sigma)"] \\
+            \mathcal{F}(L) \arrow[r,""] & \mathcal{F}(L')
+        \end{tikzcd}
+    \]
+    commutes for all $\sigma\in\Gal(L'/k)$ and so the absolute Galois group $G_k=\varprojlim_{L}\Gal(L/k)$ acts on $\mathcal{F}(k_s)=\varinjlim_{L}\mathcal{F}(L)$ naturally and so $\mathcal{F}(k_s)$ is a $G_k$-set in the usual sense. The map $\mathcal{F}\mapsto\mathcal{F}(k_s)$ can be easily seen to be a functor from $\Sh(\Et(\Spec k),\Set)$ to $\{G_k\text{-sets}\}$.
+    \begin{exercise}
+        Prove that the action of $G_k$ on $\mathcal{F}(k_s)$ is continuous (this is equivalent to proving that the stabilizer of any element is open). In addition, given a natural transformation $\mathcal{F}\to\mathcal{G}$ of \'{e}tale sheaves, describe a $G_k$-invariant map $\mathcal{F}(k_s)\to\mathcal{G}(k_s)$ such that the construction is functorial.
+    \end{exercise}
+
+    To prove this is an equivalence, one also constructs a functor the other way. Given a $G_k$-set $A$, one constructs an \'{e}tale sheaf by defining $\mathcal{F}(L)=A^{\Gal(k_s/L)}$ for any $L/k$ finite separable and $\mathcal{F}(L)\to\mathcal{F}(M)$ to be the inclusion $A^{\Gal(k_s/L)}\hookrightarrow A^{\Gal(k_s/M)}$. Then, for arbitrary \'{e}tale covers $U\to\Spec k$, one uses the formula in \eqref{eqn:speck} to ensure $\mathcal{F}$ is a sheaf. It is a straightforward check that these functors define an equivalence of categories. Furthermore, if an \'{e}tale sheaf $\mathcal{F}$ corresponds to a $G_k$-set $A$, then $\Gamma(\Spec k,\mathcal{F})=\mathcal{F}(k)=A^{\Gal(k_s/k)}=A^{G_k}$. That is, the global sections functor $\Gamma(\Spec k,-)$ corresponds to the $G_k$-invariants functor $(-)^{G_k}$, which coincides with the functor $\Hom_{S_k}(\ZZ,-)$, where $\ZZ\in S_k$ is the trivial $G_k$-module.
+    
+    Finally, we note that the equivalence restricts to an equivalence $\Sh(\Et(\Spec k),\Ab)\cong S_k$ between abelian sheaves and $G_k$-modules. Putting everything together, one obtains the desired equivalence. 
+
+
+    \begin{theorem}[{\cite[Theorem 6.4.6]{Poonen}}]\label{thm:etalespeck}
+        Let $k$ be a field and choose a separable closure $k_s$ of $k$. 
+        \begin{enumerate}
+        \item The functor
+        \begin{align*}
+            \Psi:\Sh(\Et(\Spec k),\Set) & \longrightarrow \{G_k\text{-sets}\} \\ \mathcal{F} & \longmapsto \mathcal{F}(k_s) 
+        \end{align*}
+        is an equivalence of categories that restricts to an equivalence $\Sh(\Et(\Spec k),\Ab)\rightarrow S_k$.
+        \item The global section functor $\Gamma(\Spec k,-)$ corresponds to the $G_k$-invariants functor $(-)^{G_k}$. 
+        \item There are natural isomorphisms 
+        \[ H^q_{\text{\'et}}(\Spec k, \mathcal{F}) \cong H^q(G_k, \mathcal{F}(k_s)) \] 
+        for all $q \in \NN$. 
+        \end{enumerate}
+    \end{theorem}
+
+    This result begs the following questions: What is the next simplest case for \'{e}tale cohomology? Can it also be computed explicitly? These questions lead us directly to considering discrete valuations rings, as we shall see in Section 3. 
+    
+    \section{An Interlude on \'{E}tale Sheaves}
+    In this brief section, we discuss two functorial constructions involving \'{e}tale sheaves that we will use later to describe equivalences between categories of sheaves and modules over a discrete valuation ring, yet to define. We remark all these constructions can be made entirely explicit, and that one can avoid entirely the using the objects studied in this section. However, this more concrete approach seems more \textit{ad hoc} and lacks the intuition that the more abstract setting provides. The results in this section apply to presheaves and sheaves of sets, groups, rings, etc. Hence, simply write $\Sh(\Et(X))$ for the category of sheaves, where the underlying target category is unspecified. 
+
+    \subsection{Pushforward and Pullback of \'{E}tale Sheaves}\label{sec:pushpull}
+    Let $\pi:X'\to X$ be a morphism of schemes (not necessarily \'{e}tale). By Lemma \ref{lem:etaleproperties}$(2)$, there is a natural map 
+    \begin{align*}
+        \Et(X)&\longrightarrow\Et(X')\\
+        (Y\to X)&\longmapsto(X'\times_X Y\to X'),
+    \end{align*}
+    and therefore there is the \textit{pushforward morphism}
+    $$\pi_p:\Psh(\Et(X'))\longrightarrow\Psh(\Et(X))$$
+    such that $\pi_p(\mathcal{F}')(U\to X)=\mathcal{F}'(U\times_X X'\to X')$. This is often abbreviated as $\pi_p(\mathcal{F}')(U)=\mathcal{F}'(U\times_X X')$.
+
+    \begin{exercise}
+        Show that the pushforward morphism sends \'{e}tale sheaves over $X'$ to \'{e}tale sheaves over $X$. 
+    \end{exercise}
+    The pushforward map on sheaves is denoted as $\pi_*:\Sh(\Et(X'))\rightarrow\Sh(\Et(X))$.
+
+    A natural question to ask is whether there is a functor going the other way that associates every $\mathcal{F}\in\Sh(\Et(X))$ some \'{e}tale sheaf over $X'$. One can show that $\pi_p$ preserves limits, and together with some set theoretic considerations, it follows by categorical abstract nonsense that $\pi_p$ has a left adjoint functor $\pi^p:\Sh(\Et(X))\rightarrow\Sh(\Et(X'))$, called the \textit{pullback morphism}. However, two problems arise with it.
+    \begin{enumerate}[(1)]
+        \item The construction of $\pi^p$ is considerably harder to describe. Explicitly, given a sheaf $\mathcal{F}\in\Sh(\Et(X))$ and an \'{e}tale morphism $U'\to X'$, then 
+        \begin{equation}\label{eqn:pullbacklimit}\tag{\ref{sec:pushpull}.1}
+            \pi^p(\mathcal{F})(U')=\varinjlim_U\mathcal{F}(U),
+        \end{equation}
+        where the colimit is taken over all objects $U\to X$ in $\Et(X)$ and maps $U\to U'$ (not necessarily \'{e}tale) giving a commuting square
+        \begin{equation}\label{eqn:squarecom}\tag{\ref{sec:pushpull}.2}
+            \begin{tikzcd}
+                U' \arrow[r,""] \arrow[d,""] & U \arrow[d,""] \\
+                X' \arrow[r,""] & X.
+            \end{tikzcd}
+        \end{equation}
+
+        %The implicit morphisms are the obvious ones. 
+        \textbf{Cite Milne}
+        \item In case this was not bad enough, the pushforward morphism does \textbf{not} send \'{e}tale sheaves over $X'$ to \'{e}tale sheaves over $X$. The pullback morphism on sheaves is defined as $\pi^*=a_X\circ\pi^p:\Sh(\Et(X))\rightarrow\Sh(\Et(X'))$, where $a_X:\Psh(\Et(X))\rightarrow\Sh(\Et(X))$ is the \textit{\'{e}tale sheafification} that associates to an \'{e}tale presheaf $\mathcal{F}\in\Psh(\Et(X))$ the unique \'{e}tale sheaf $a_X(\mathcal{F})\in\Sh(\Et(X))$ and map $\varphi:\mathcal{F}\to a_X(\mathcal{F})$ satisfying the following universal property:
+        
+        \textit{For any \'{e}tale sheaf $\mathcal{G}$ and morphism $\psi':\mathcal{F}\to\mathcal{G}$ there is a unique $\psi:a_X(\mathcal{F})\to\mathcal{G}$ such that $\psi'=\psi\circ\varphi$.}
+    \end{enumerate}
+
+    Similarly to the pushforward, the pullback morphism on sheaves is denoted $\pi^*:\Sh(\Et(X))\rightarrow\Sh(\Et(X'))$.
+
+    This makes the pullback morphism a complicated construction to work with in practice. However, if $\pi:X'\to X$ is additionally \'{e}tale, then the description is a lot simpler. Firstly, there is a natural map
+    \begin{align*}
+        \Et(X')&\longrightarrow\Et(X)\\
+        (f:U'\to X')&\longmapsto(\pi\circ f:U'\to X),
+    \end{align*}
+    and this induces the pullback morphism $\pi^p$, which is given by $\pi^p(\mathcal{F})(U'\xrightarrow{f}X')=\mathcal{F}(U'\xrightarrow{\pi\circ f}X)$. This map coincides with the pullback morphism defined in \eqref{eqn:pullbacklimit} because if $f:U'\to X'$ is an \'{e}tale morphism, then the \'{e}tale map $\pi\circ f:U'\to X$, together with $\Id_{U'}:U'\to U'$, is a terminal object of the diagram from \eqref{eqn:squarecom}. Hence, the colimit equals the terminal object and
+    $$\pi^p(\mathcal{F})(U'\xrightarrow{f}X')=\varinjlim_U\mathcal{F}(U)=\mathcal{F}(U'\xrightarrow{\pi\circ f}X).$$ 
+    \begin{exercise}
+        If $\pi:X'\to X$ is \'{e}tale, show that the pullback morphism sends \'{e}tale sheaves over $X$ to \'{e}tale sheaves over $X'$. 
+    \end{exercise}
+
+    \section{Discrete Valuation Rings and Galois Modules}
+    \subsection{The Spectrum of a DVR}
+    In this section, we introduce the notion of a discrete valuation ring (DVR) $R$, we construct the category of ``Galois modules'' over $R$ and we show that it is equivalent to the category of abelian sheaves over $R$.
+
+    Recall that a local ring is a ring with a unique maximal ideal. Then a \textit{discrete valuation ring (DVR)} is a local principal ideal domain. For the remainder of the talk, we will use the following notation: $R$ will denote a $DVR$, $K=\mathrm{Frac}(R)$ its fraction field, $\pp$ the unique maximal ideal and $k=R/\pp$ the residue field, that we assume to be perfect. Any generator $\varpi$ of $\pp$ is called a \textit{uniformizer} of $R$ and by unique factorization there is a unique map $\nu:K^*\to\ZZ$, called a \textit{normalized discrete valuation}, such that 
+    \begin{enumerate}[(1)]
+        \item For all $x,y\in K^*$, $\nu(xy)=\nu(x)+\nu(y)$.
+        \item For all $x,y\in K^*$, $\nu(x+y)\geq\min\{\nu(x),\nu(y)\}$.
+        \item If $\varpi$ is a uniformizer, then $\nu(\varpi)=1$.
+    \end{enumerate}
+    It also satisfies that $R=\{x\in K:\nu(x)\geq 0\}$ and $\pp=\{x\in K:\nu(x)\geq 1\}$. 
+    \begin{example}
+        The following are all examples of DVR's.
+        \begin{enumerate}[(i)]
+            \item The p-adic integers $R=\ZZ_p$ with the $p$-adic valuation, $K=\QQ_p$ and $k=\FF_p$.
+            \item DVR's are not necessarily complete, and $R=\ZZ_{(p)}$ (localization away from $(p)$) is a DVR. We have $K=\QQ$ and $k=\FF_p$.
+            \item There are also DVR of positive characteristic. One could take $R=\FF_p[[t]]$, with unique maximal ideal $\pp=tR$, $K=\FF_p((t))$ and $k=\FF_p$.
+        \end{enumerate}
+    \end{example}
+
+    We now study the topology on $\Spec R$. To simplify notation, we let $X=\Spec R$, which consists of two points:
+    \begin{itemize}
+        \item The \textit{closed point} $\pp$, with residue field $k=R/\pp$.
+        \item The \textit{generic point} $(0)$, with residue field $K=\Frac(R/(0))$.
+    \end{itemize}
+    The natural maps $R\hookrightarrow K$ and $R\twoheadrightarrow k$ induce the maps $j:\Spec K\to X$ and $i:\Spec k\hookrightarrow X$ such that $\mathrm{Im}(j)=\{(0)\}$ and $\mathrm{Im}(i)=\{\pp\}$.
+    \begin{lemma}
+        The map $j:\Spec K\to X$ is \'{e}tale, while $i:\Spec k\hookrightarrow X$ is not.
+    \end{lemma}
+    \begin{proof}
+        The map $j$ is an open immersion, hence \'{e}tale. However, $i$ is a closer immersion, hence not \'{e}tale since \'{e}tale maps are open.
+    \end{proof}
+
+    \subsection{Construction of the Galois Modules over \texorpdfstring{$R$}{TEXT}}
+    We finally construct the Galois modules over $R$. The idea behind the construction is to encode the structure of a sheaf over $X$ into the structure of $G_K$ and $G_k$-modules, compatible in some way that we will see later. To do this, we briefly recall some well-known objects from Galois theory. Fix a separable closure $\bar K$ of $K$ and extend the normalized valuation $\nu$ of $K$ to a valuation $\nu:\bar K\to\QQ$, which may not be unique. Given an extension $L/K$, we say it is \textit{unramified} if $\nu(L)=\nu(K)=\ZZ$. This notion is independent of the extension of $\nu$, and there is a unique maximal unramified extension $K^{ur}$.
+
+    We may then complete with respect to the metric induced by $\nu$ to obtain the field extensions $\bar K_\nu/K^{ur}_\nu/K_\nu$. The completion of an algebraically closed field is still algebraically closed, and $K^{ur}_\nu$ is also the maximal unramified extension of $K_\nu$ inside $\bar K_\nu$ as local fields. We now consider the groups
+    $$G_\nu=\Gal(\bar K_\nu/K^{ur}_\nu)\subset\Gal(\bar K/K)\quad\text{ and }\quad I_\nu=\Gal(\bar K_\nu/K^{ur}_\nu)\subset G_\nu,$$
+    denoted as the \textit{decomposition} and \textit{inertia} groups respectively, and they fit in the short exact sequence
+    $$1\longrightarrow I_\nu\longrightarrow G_\nu\longrightarrow G_k\longrightarrow 1.$$
+    This sequence allows us to pass from a $G_K$-module to a $G_k$-module in a functorial way. Given some $A\in S_K$, we can consider the \textit{unramified module} $A^0=A^{I_\nu}$ which is a $G_\nu/I_\nu=G_k$-module.
+
+    \begin{definition}\label{defn:galoismod}
+        We define the category $S_R$ of \textit{Galois modules over $R$} as follows. The objects are tuples $(M,N,\varphi)$ such that $M$ is a $G_K$-module, $N$ is a $G_k$-module and $\varphi:N\to M$ satisfies: 
+        \begin{itemize}
+            \item The map $\varphi:N\to M$ is a homomorphism of abelian groups.
+            \item The containment $\varphi(N)\subseteq M^0$.
+            \item When viewed as a map from $N$ to $M^{0}$, $\varphi$ is a homomorphism of $G_k$-modules.
+        \end{itemize}
+        A morphism $f:(N,M,\varphi)\to(N',M',\varphi')$ is a pair $f=(f_K,f_k)$ such that $f_K:M\to M'$ is a $G_K$-homomorphism, $f_k:N\to N'$ is a $G_k$-homomorphism and the square
+        \[
+            \begin{tikzcd}
+                N \arrow[r,"\varphi"] \arrow[d,"f_k"] & M \arrow[d,"f_K"] \\
+                N' \arrow[r,"\varphi'"] & M'.
+            \end{tikzcd}
+        \]
+        commutes.
+    \end{definition}
+
+    \begin{example}
+        The following are all objects of $S_R$:
+        \begin{itemize}
+            \item If $M\in S_K$, then $(M,M^0,\Id)\in S_R$.
+            \item If $A$ is an abelian group equipped with the trivial action by $G_K$, then $(A,A,\Id_A)\in S_R$. We call this the \textit{constant module} and we will write it simply as $A$.
+            \item Let $U=\{\alpha\in (K^{ur})^*:\nu(\alpha)=0\}$, which is naturally a $G_k$-module. Then $\mathbb{G}_{m,R}=(\bar K^*,U,\Id)$ is called the \textit{multiplicative Galois module over $R$}.
+        \end{itemize}
+    \end{example}
+    We are now ready to state the main theorem of the talk.
+    \begin{theorem}\label{thm:etaleDVR}
+        Let $R$ be a discrete valuation with fraction field $K$, residue field $k$ and let $X=\Spec R$.
+        \begin{enumerate}
+            \item There is a natural equivalence of categories $\Phi$ between $\Sh(\Et(X),\Ab)$ and $S_R$. 
+            \item The global sections functor $\Gamma(X,-):\Sh(\Et(X),\Ab)\to\Ab$ corresponds to the functor $\Hom_{S_R}(\ZZ,-):S_R\to\Ab$.
+            \item There are natural isomorphisms
+            $$H^q_{\et}(\Spec R,\mathcal{F})\cong\Ext_{S_R}^q(\ZZ,\Phi(\mathcal{F})),$$
+            for all $q\in\NN$, functorial in both variables.
+        \end{enumerate}
+    \end{theorem}
+
+    \subsection{Construction of the Equivalence}
+    In this section, we construct a functor 
+    \begin{align*}
+        \Phi:\Sh(\Et(X))\longrightarrow S_R\\
+        \mathcal{F}\longmapsto (M_\mathcal{F},N_\mathcal{F},\varphi_\mathcal{F})
+    \end{align*}
+    in three steps. Let $\mathcal{F}\in\Sh(\Et(X))$.
+    \begin{enumerate}[(1)]
+        \item \textbf{Define $M_\mathcal{F}$:} Recall that the map $j:\Spec K\rightarrow X$ is an open immersion, hence \'{e}tale. We have the pullback morphism $j^*:\Sh(\Et(X))\to\Sh(\Et(\Spec K))$ and we simply define $M_\mathcal{F}$ to be the image of $\mathcal{F}$ under 
+        $$\Sh(\Et(X))\xrightarrow{\text{  $j^*$  }}\Sh(\Et(\Spec K))\xrightarrow{\text{  $\Psi_K$  }} S_K,$$
+        where $\Psi_K$ is the equivalence from Theorem \ref{thm:etalespeck}. Fortunately, since $j$ is \'{e}tale, both $j^*$ and $\Psi$ are explicit maps, and one can show that 
+        $$M_\mathcal{F}=\varinjlim_{L}\mathcal{F}(\Spec L),$$
+        where $L$ ranges over all finite and separable extensions over $K$. As explained in Section \ref{sec:etalefield}, if $L/K$ is Galois, $\Gal(L/K)$ acts on $\mathcal{F}(\Spec L)$ in a compatible way, inducing an action of $G_K$ on $M_\mathcal{F}$.
+        \item \textbf{Define $N_\mathcal{F}$:} This time, we use the map $i:\Spec k\hookrightarrow X$ and we define $N_\mathcal{F}$ to be the image of $\mathcal{F}$ under the composition
+        $$\Sh(\Et(X))\xrightarrow{\text{  $i^*$  }}\Sh(\Et(\Spec k))\xrightarrow{\text{  $\Psi_k$  }} S_k.$$
+        This time, however, $i$ is not an \'{e}tale map, and therefore the pullback $i^*$ is not given by composing with $i$. To describe $i^*$ explicitly, and hence $N_\mathcal{F}$, we fix an isomorphism $G_k\cong\Gal(K^{ur}_\nu/\nu)$. Then the finite field extensions of $k$ are in correspondence with finite separable \textit{unramified} extensions of $K$. Furthermore, if $L/K$ is a finite separable extension, then $\Spec\mathcal{O}_L\to\Spec R$ is \'{e}tale if and only if $L/K$ is unramified. One can then show that $i^*(\mathcal{F})(\Spec L)=\mathcal{F}(\Spec\mathcal{O}_L)$ where $L$ is viewed simultaneously as a finite extension of $k$ and finite separable unramified extension of $K$. Consequently, 
+        $$N_\mathcal{F}=\varinjlim_{L}\mathcal{F}(\Spec\mathcal{O}_L),$$
+        where $L$ ranges over finite unramified extensions of $K$. Since $G_k$ acts on each $\mathcal{F}(\Spec\mathcal{O}_L)$ in a compatible way, $N_\mathcal{F}$ is indeed a $G_k$-module.
+        \item \textbf{Define $\varphi_\mathcal{F}$:} To define a map $\varphi_\mathcal{F}:N_\mathcal{F}\to M_\mathcal{F}$, we simply require a family of maps $\varphi_{L,\mathcal{F}}:\mathcal{F}(\Spec\mathcal{O}_L)\to\mathcal{F}(\Spec L)$ for each $L/K$ unramified such that the square 
+        \[
+            \begin{tikzcd}
+                \mathcal{F}(\Spec\mathcal{O}_L) \arrow[r,"\varphi_{L,\mathcal{F}}"] \arrow[d,""] & \mathcal{F}(\Spec L) \arrow[d,""] \\
+                \mathcal{F}(\Spec\mathcal{O}_{L'}) \arrow[r,"\varphi_{L',\mathcal{F}}"] & \mathcal{F}(\Spec L')
+            \end{tikzcd}
+        \]
+        commutes for all towers of finite unramified extensions $L'/L/K$. But this is straightforward, we simply choose $\varphi_{L,\mathcal{F}}=\mathcal{F}(\Spec L\to\Spec\mathcal{O}_L)$ induced from the inclusion $\mathcal{O}_L\hookrightarrow L$. 
+    \end{enumerate}
+    One should also check that $\varphi_\mathcal{F}$ satisfies the condition of Definition \ref{defn:galoismod}, but this is now easy from the definitions. Firstly, we note that 
+    $$\varphi_\mathcal{F}(N_\mathcal{F})\subseteq\varinjlim_{\substack{L/K\\\text{unram}}}\mathcal{F}(\Spec L)\subseteq M_\mathcal{F}^{0}$$
+    since $I_v$ acts trivially on all subfields of $K^{ur}_\nu$. And secondly, $\varphi_\mathcal{F}$ is a homomorphism of abelian groups that preserves the $G_k$ action since all $\varphi_{L,\mathcal{F}}$ are morphisms of abelian groups and they preserve the $\Gal(L/K)$ action. 
+
+    We will not prove that $\Phi:\mathcal{F}\mapsto(M_\mathcal{F},N_\mathcal{F},\varphi_\mathcal{F})$ is an equivalence of categories since this is much harder than the case of a field. This is in fact a much more general fact, which is covered in \textbf{Cite Artin's Lectures here.}
+
+    Finally, we show that the global sections functor $\Gamma(X,-)$ corresponds to the functor $\Hom_{S_R}(\ZZ,-)$ under the equivalence. Recall that a map $f:(\ZZ,\ZZ,\Id_\ZZ)\to(M,N,\varphi)$ is a pair $(f_K,f_k)$ of $G_K$ and $G_k$-invariant maps respectively such that the square
+    \[
+        \begin{tikzcd}
+            \ZZ \arrow[r,"\Id_\ZZ"] \arrow[d,"f_k"] & \ZZ \arrow[d,"f_K"] \\
+            N \arrow[r,"\varphi"] & M
+        \end{tikzcd}
+    \]
+    commutes. Such a map is clearly determined by the pair of elements $f_K(1)$ and $f_k(1)$, and in fact the commutativity of the square implies that $f_K(1)=\varphi(f_k(1))$. Hence, $f$ is determined by $f_k(1)$ and so $$\Hom_{S_R}(\ZZ,(M,N,\varphi))\cong\Hom_{S_k}(\ZZ,N)=N^{G_k}.$$
+    If $\mathcal{F}\in\Sh(\Et(X))$, then $$\Hom_{S_R}(\ZZ,\Phi(\mathcal{F}))\cong (N_\mathcal{F})^{G_k}=\left(\varinjlim_{\substack{L/K \text{ unram}}}\mathcal{F}(\Spec\mathcal{O}_L)\right)^{G_k}=\mathcal{F}(\Spec R)=\Gamma(X,\mathcal{F}),$$
+    as desired. By the existence and uniqueness of right derived functors, it follows that 
+    $$H^q_{\et}(X,\mathcal{F})\cong\Ext_{S_R}^q(\ZZ,\Phi(\mathcal{F}))$$
+    for all $q\in\NN$ and the isomorphism is functorial in both variables. This concludes the proof of Theorem \ref{thm:etaleDVR}.
+
+    \section{\'{E}tale Cohomology over a Discrete Valuation Ring}
+    In this last section, we study in some detail the cohomology groups
+    $$H^q(R,F):=\Ext^q_{S_R}(\ZZ,F)=(R^q\Hom_{S_R}(\ZZ,-))(F),$$
+    where $q\geq 0$ and $F\in S_R$ is a Galois module over $R$. The first step is to introduce a few functors that will help us relate the $H^q(R,F)$ in terms of more familiar Galois cohomology groups.
+
+    \subsection{The Natural Functors}\label{sec:naturalfunc}
+    We saw in the previous section that the maps $j:\Spec K\to X$ and $i:\Spec k\hookrightarrow X$ are very helpful to relate the \'{e}tale cohomology of $R$ with the \'{e}tale cohomology of $K$ and $k$. As a result, we want to understand the pushforward and pullback functors $j_*,i_*,j^*$ and $i^*$ in terms of Galois modules instead of \'{e}tale sheaves. 
+    \begin{lemma}
+        Under the equivalence from Theorem \ref{thm:etaleDVR}, the functors above map the Galois modules as follows:
+
+        \begin{minipage}{0.35\textwidth}
+            \begin{align*}
+                j_*:S_K&\longrightarrow S_R\\
+                M&\longmapsto(M,M^0,\Id)\\
+                j^*:S_R&\longrightarrow S_K\\
+                (M,N,\varphi)&\longmapsto M
+            \end{align*}
+        \end{minipage}
+        \begin{minipage}{0.35\textwidth}
+            \begin{align*}
+                i_*:S_k&\longrightarrow S_R\\
+                N&\longmapsto(0,N,0)\\
+                i^*:S_R&\longrightarrow S_k\\
+                (M,N,\varphi)&\longmapsto N
+            \end{align*}
+        \end{minipage} 
+    \end{lemma}
+
+    Together with the four above morphism, one defines the two functors 
+
+    \begin{minipage}{0.35\textwidth}
+        \begin{align*}
+            j_!:S_K&\longrightarrow S_R\\
+            M&\longmapsto(M,0,0)\\
+        \end{align*}
+    \end{minipage}
+    \begin{minipage}{0.35\textwidth}
+        \begin{align*}
+            i_!:S_R&\longrightarrow S_k\\
+            (M,N,\varphi)&\longmapsto\ker\varphi\\
+        \end{align*}
+    \end{minipage} 
+
+    called \textit{extension by zero over a closed point} and \textit{sections with support on a closed point}, respectively.
+
+    \begin{exercise}
+        Show that the functors $i^*, i_*, j^*$ and $j_!$ are exact, while $j_*$ and $i^!$ are left-exact.
+    \end{exercise}
+    \begin{proposition}\label{prop:sesmodules}
+        For every $F\in S_R$, there is a short exact sequence of Galois modules over $R$ (and hence of \'{e}tale sheaves over $\Spec R$)
+        $$0\longrightarrow j_!j^*F\longrightarrow F\longrightarrow i_*i^*F\longrightarrow 0.$$
+    \end{proposition}
+    \begin{proof}
+        As Galois modules, if $F=(M,N,\varphi)$, then $j_!j^*F=(M,0,0)$ and $i_*i^*=(0,N,0)$, and hence the sequence above is visibly
+        \[
+            \begin{tikzcd}
+                0 \arrow[r,""] & 0 \arrow[r,""] \arrow[d,""] & N \arrow[r,"\Id_N"] \arrow[d,"\varphi"] & N \arrow[r,""] \arrow[d,""] & 0 \\
+                0 \arrow[r,""] & M \arrow[r,"\Id_M"] & M \arrow[r,""] & 0 \arrow[r,""] & 0,
+            \end{tikzcd}
+        \]
+        which is clearly a short exact sequence in the category of Galois modules over $R$.
+    \end{proof}
+
+    Consequently, for any $F\in S_R$ one obtains a long exact sequence of cohomology groups
+    \begin{equation}\label{eqn:longexact}\tag{\ref{sec:naturalfunc}.1}
+        \cdots\longrightarrow H^q(R,j_!j^*F)\longrightarrow H^q(R,F)\longrightarrow H^q(R,i_*i^*F)\longrightarrow H^{q+1}(R,j_!j^*F)\longrightarrow\cdots   
+    \end{equation}
+
+    and therefore to understand $H^r(R,F)$ one can study instead the groups $H^r(R,j_!j^*F)=H^r(R,(M,0,0))$ and $H^r(R,i_*i^*F)=H^r(R(0,N,0))$ that, unsurprisingly, are closely related to the Galois cohomology of $K$ and $k$, respectively. The following groups will be an essential tool to study them.
+
+    \begin{definition}
+        Let $\ZZ$ be the constant $G_k$-module, so that $i^*\ZZ=(0,\ZZ,0)\in S_R$. We define the \textit{compact \'{e}tale cohomology groups} as
+        $$H^q_{\comp}(R,F)=\Ext^q_{S_R}(i^*\ZZ,F).$$
+    \end{definition}
+
+    \subsection{Study of \texorpdfstring{$S_R$}{TEXT} via Homological Algebra}\label{sec:threeresults}
+
+    To understand the groups $H^r(R,(M,0,0))$ and $H^r(R,(0,N,0))$, one needs to study the relationship between \'{e}tale cohomology groups, compact \'{e}tale cohomology groups and Galois cohomology groups. To do this, one needs to use homological algebra tools that are quite technical and lengthy. In this subsection, we state the main three results that give a complete description of these groups, but we only provide some remarks about the proofs. \textbf{Cite Steins Here}
+
+    \begin{proposition}[Relative Cohomology Exact Sequence]\label{prop:relcoh}
+        Let $F\in S_R$. Then there is a short exact sequence
+        \begin{equation}\label{eqn:relativeseq}\tag{\ref{sec:threeresults}.1}
+            \cdots\longrightarrow H^q_{\comp}(R,F)\longrightarrow H^q(R,F)\longrightarrow H^q(K,j^*F)\longrightarrow H^{q+1}_{\comp}(R,F)\longrightarrow\cdots    
+        \end{equation}
+    \end{proposition}
+    \begin{proposition}\label{prop:HqM}
+        Let $M\in S_K$. Then, for all $q\geq 1$,
+        $$H^q_{\comp}(R,j_!M)\cong H^{q-1}(K,M)\quad\text{ and }\quad H^q(R,j_!M)=0.$$        
+    \end{proposition}
+    \begin{proposition}\label{prop:HqN}
+        Let $N\in S_k$. Then, for all $q\geq 0$,
+        $$H^q_{\comp}(R,i_*N)\cong H^q(k,N).$$
+    \end{proposition}
+
+    Let us give some remarks on the proofs of these results, as they all share significant similarities. To prove Proposition \ref{prop:relcoh}, one applies the contravariant functor $\Hom_{S_R}(-,F)$ to the short exact sequence 
+    $$0\longrightarrow j_!j^*\ZZ\longrightarrow \ZZ\longrightarrow i_*i^*\ZZ\longrightarrow 0,$$
+    and one obtains the long exact sequence
+    $$\cdots\longrightarrow \Ext_{S_R}^q(i_*i^*\ZZ,F)=H^q_{\comp}(R,F)\longrightarrow \Ext_{S_R}^q(\ZZ,F)=H^q(R,F)\longrightarrow \Ext_{S_R}^q(j_!j^*\ZZ,F)\longrightarrow\cdots,$$
+    and so it is enough to show that 
+    $$\Ext_{S_R}^q(j_!j^*\ZZ,F)\cong H^q(K,j^*F)=\Ext_{S_K}^q(\ZZ,j^*F)$$ 
+    functorially in $F$. Of course, the first step is to show that this isomorphism holds for $q=0$. This holds since
+    $$\Hom_{S_R}(j_!j^*\ZZ,F)=\Hom_{S_R}((\ZZ,0,0),(M,N,\varphi))\cong \Hom_{S_K}(\ZZ,M)=\Hom_{S_K}(\ZZ,j^*F),$$
+    and so $\Hom_{S_R}(j_!j^*\ZZ,-)\cong\Hom_{S_K}(\ZZ,j^*-)$ as functors $S_R\to\Ab$. By definition, $\Ext^q_{S_R}(j_!j^*\ZZ,-)$ is its $q$th right derived of the functor, and by the uniqueness of right derived functors, it is enough to show that $\Ext^q_{S_K}(\ZZ,j^*-)$ is also its $q$th derived functor. So we want to show that 
+    $$(R^q\Hom_{S_K}(\ZZ,-))(j^*F)\cong(R^q\Hom_{S_K}(\ZZ,j^*-))(F)$$
+    functorially on $F$. The point is that, by the construction of right derived functors, this is true if there is some injective resolution $F\to I^\bullet$ such that $j^*F\to(j^*I)^\bullet$ is also an injective resolution. We already know that $j^*$ is exact, and so the Proposition follows immediately from the following.
+    \begin{lemma}\label{lem:injectives}
+        The functor $j^*:S_R\to S_K$ preserves injectives.
+    \end{lemma}
+    Hence, the proof of the Proposition is reduced to proving some technical property of the natural functor $j^*$. Proving Lemma \ref{lem:injectives} is lenghty, but uses straightforward ideas from homological algebra. The proofs of the other two propositions follow from similar arguments to these. \textbf{Cite Stein}
+
+
+
+    \subsection{\'{E}tale Cohomology over a DVR is unramified Galois Cohomology}
+    Using the three Propositions from the previous section, we can now state and prove the main theorem that relates \'{e}tale cohomology over $R$ with Galois cohomology
+    \begin{theorem}
+        Let $F=(M,N,\varphi)\in S_R$. Then, for all $q\geq0$, we have an isomorphism
+        $$H^q(R,F)\cong H^q(k,i^*F)=H^q(k,N)$$
+        that is functorial in both variables.
+    \end{theorem}
+    \begin{proof}
+        From the exactness of \eqref{eqn:longexact} and $H^q(R,j_!M)=0$ (Proposition \ref{prop:HqM}), we get that 
+        $$H^q(R,F)\cong H^q(R,i_*i^*F)=H^q(R,(0,N,0)).$$
+        From the Relative Cohomology exact sequence (Proposition \ref{prop:relcoh}) applied to $i_*i^*F$, we obtain 
+        \begin{equation}
+            \cdots\longrightarrow H^q_{\comp}(R,i_*i^*F)\longrightarrow H^q(R,i_*i^*F)\longrightarrow H^q(K,j^*i_*i^*F)\longrightarrow H^{q+1}_{\comp}(R,i_*i^*F)\longrightarrow\cdots 
+        \end{equation}
+        However, since $j^*i_*i^*F=j^*(0,N,0)=0$, it follows that $H^q(K,j^*i_*i^*F)=0$ and therefore
+        $$H^q(R,i_*i^*F)\cong H^q_{\comp}(R,i_*i^*F).$$
+        Finally, by Proposition \ref{prop:HqN}, it follows that 
+        $$H^q_{\comp}(R,i_*i^*F)=H^q_{\comp}(R,i_*N)\cong H^q(k,N),$$
+        as desired.
+    \end{proof}
+    
+
+\end{document}
